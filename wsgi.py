@@ -14,11 +14,24 @@
 # along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 from flask import Flask
+from os import environ
+from redis import Redis
 application = Flask(__name__)
 
 @application.route('/')
 def hello_world():
     return "Hello Python World!\r\n", 200, { 'Content-Type': 'text/plain' }
+
+@application.route('/visits')
+def visitor_counter():
+    redis = Redis(
+        host = environ.get('REDIS_SERVICE_HOST', 'localhost'),
+        port = environ.get('REDIS_SERVICE_PORT', '6379'),
+        password = environ.get('REDIS_PASSWORD', '')
+    )
+    redis.incr('visits')
+    visits = int(redis.get('visits'))
+    return "You have been here %i times\r\n" % visits, 200, { 'Content-Type': 'text/plain' }
 
 if __name__ == '__main__':
     application.run(debug = True)
