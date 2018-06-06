@@ -14,11 +14,12 @@
 # along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 from flask import Flask
+from socket import gethostname
 application = Flask(__name__)
 
 @application.route('/')
 def hello_world():
-    return "Hello Python World!\r\n", 200, { 'Content-Type': 'text/plain' }
+    return "Hello from %s!\r\n" % gethostname(), 200, { 'Content-Type': 'text/plain' }
 
 if __name__ == '__main__':
     application.run(debug = True)
