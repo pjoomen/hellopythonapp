@@ -13,12 +13,12 @@
 # You should have received a copy of the GNU General Public License
 # along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
-from flask import Flask
+from flask import Flask,request
 application = Flask(__name__)
 
 @application.route('/')
 def hello_world():
-    return "Hello Python World!\r\n", 200, { 'Content-Type': 'text/plain' }
+    return '%s' % request.headers, 200, { 'Content-Type': 'text/plain' }
 
 if __name__ == '__main__':
     application.run(debug = True)
