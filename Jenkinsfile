@@ -10,17 +10,13 @@ node {
     input message: 'Approve for testing?',
       id: 'approval'
   }
-  stage('oc tag :test') {
+  stage('deploy to test') {
     openshiftTag srcStream: 'hellopythonapp',
       namespace: 'development',
       srcTag: 'latest',
-      destinationNamespace: 'development',
+      destinationNamespace: 'testing',
       destStream: 'hellopythonapp',
       destTag: 'test'
-  }
-  stage('oc deploy :test') {
-    openshiftDeploy depCfg: 'hellopythonapp',
-      namespace: 'testing'
     openshiftVerifyDeployment depCfg: 'hellopythonapp',
       namespace: 'testing'
   }
@@ -28,17 +24,13 @@ node {
     input message: 'Approve for production?',
       id: 'approval'
   }
-  stage('oc tag :prod') {
+  stage('deploy to production') {
     openshiftTag srcStream: 'hellopythonapp',
       namespace: 'development',
       srcTag: 'latest',
-      destinationNamespace: 'development',
+      destinationNamespace: 'production',
       destStream: 'hellopythonapp',
       destTag: 'prod'
-  }
-  stage('oc deploy :prod') {
-    openshiftDeploy depCfg: 'hellopythonapp',
-      namespace: 'production'
     openshiftVerifyDeployment depCfg: 'hellopythonapp',
       namespace: 'production'
   }
