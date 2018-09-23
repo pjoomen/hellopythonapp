@@ -1,7 +1,10 @@
 node {
   stage('build & deploy') {
     openshiftBuild bldCfg: 'hellopythonapp',
+      namespace: 'development',
       showBuildLogs: 'true'
+    openshiftVerifyDeployment depCfg: 'hellopythonapp',
+      namespace: 'development'
   }
   stage('approval (test)') {
     input message: 'Approve for testing?',
@@ -9,7 +12,9 @@ node {
   }
   stage('oc tag :test') {
     openshiftTag srcStream: 'hellopythonapp',
+      namespace: 'development',
       srcTag: 'latest',
+      destinationNamespace: 'development',
       destStream: 'hellopythonapp',
       destTag: 'test'
   }
@@ -25,7 +30,9 @@ node {
   }
   stage('oc tag :prod') {
     openshiftTag srcStream: 'hellopythonapp',
+      namespace: 'development',
       srcTag: 'latest',
+      destinationNamespace: 'development',
       destStream: 'hellopythonapp',
       destTag: 'prod'
   }
