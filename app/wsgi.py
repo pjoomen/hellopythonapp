@@ -1,4 +1,4 @@
-# Copyright (c) 2015 Pepijn Oomen <oomen@piprograms.com>
+# Copyright (c) 2015-2025 Pepijn Oomen <oomen@piprograms.com>
 #
 # This is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
